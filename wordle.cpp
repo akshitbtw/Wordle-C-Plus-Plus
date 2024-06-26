@@ -1,5 +1,12 @@
-#include<bits/stdc++.h>
+#include<iostream>
 #include<graphics.h>
+#include<string>
+#include<fstream>
+#include<ctype.h>
+#include<algorithm>
+#include<vector>
+#include<conio.h>
+#include<time.h>
 
 using namespace std;
 
@@ -25,7 +32,7 @@ class game
     int rx, ry, x, y;// x,y - character location coordinates
     int i, j, l, m, count, flag_counter, row; // i,j - store, l,m - location
     int loc[50][3]; // x , y coordinate + input character
-    int occurence[5];
+    int occurence[26];
     char name[50], input, word[6], store[10][5], temp[100], flag[6][5], time_elapsed[50];
     bool isCorrect;
     char player_name[30];
@@ -38,7 +45,7 @@ public:
         // Board Top Left Corner Co-ordinates
         rx=70, ry=110, x = 100, y=140;// x,y - character location coordinates
         i=0, j=0, l=0, m=0, count=0, flag_counter=0, row=0; // i,j - store, l,m - location
-        occurence[5]={0};
+        memset(occurence, 0, sizeof occurence);
         name[50]={0}, input, word[6]={0}, temp[100]={0}, time_elapsed[50]={0};
         score=0;   level = 0;
         isCorrect = false;
@@ -170,7 +177,7 @@ public:
         string line;
         int random = 0;
         int numOfLines = 0;
-        ifstream File("words.txt");
+        ifstream File("words1.txt");
 
         srand(time(0));
         random = rand() % 2313;
@@ -194,7 +201,7 @@ public:
         string line;
         int random = 0;
         int numOfLines = 0;
-        ifstream File("words.txt");
+        ifstream File("words1.txt");
 
         while(getline(File, line))
         {
@@ -213,22 +220,12 @@ public:
     void count_characters(void)
     {
         char skip[5];
-        // cout<<word<<endl;
         for(int i=0; i<5; i++)
         {
             char c = word[i];
-            if(c==skip[0] || c==skip[1] || c==skip[2] || c==skip[3] || c==skip[4])
-                continue;
-            for(int j=0; j<5; j++)
-            {
-                if(c==word[j])
-                {
-                    occurence[i]+=1;
-                    skip[i] = c;
-                }     
-            }
+            occurence[c-'A']++;
         }
-        // cout<<"Occurence Before : "<<occurence[0]<<occurence[1]<<occurence[2]<<occurence[3]<<occurence[4]<<endl;
+        
     }
 
     void algorithm(char a[])
@@ -241,7 +238,7 @@ public:
             if(a[i]==word[i])
             {
                 flag[row][i]='Y';
-                occurence[s.find(a[i])]-=1;
+                occurence[a[i]-'A']-=1;
                 skip[i]=i;
             }
         }
@@ -252,23 +249,14 @@ public:
                 flag_counter++;
                 continue;
             }
-            for(int j=0; j<5; j++)
+            if(occurence[a[i]-'A']>0){
+                flag[row][flag_counter]='N';
+                occurence[a[i]-'A']-=1;
+            }
+            else
             {
-                if(j==skip[j])
-                {
-                    continue;
-                }
-                if(a[i]==word[j] && i!=j && occurence[s.find(a[i])]>0)
-                {
-                    flag[row][flag_counter]='N';
-                    occurence[s.find(a[i])]-=1;
-                    break;
-                }
-                else
-                {
-                    flag[row][flag_counter]='0';
-                }
-            }  
+                flag[row][flag_counter]='0';
+            }
             flag_counter++;      
         }
         if(flag[row][0]=='Y' && flag[row][1]=='Y' && flag[row][2]=='Y' && flag[row][3]=='Y' && flag[row][4]=='Y')
