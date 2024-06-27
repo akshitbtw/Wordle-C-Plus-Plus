@@ -27,7 +27,7 @@ g++ $fileName -o $fileNameWithoutExt -lbgi -lgdi32 -lcomdlg32 -luuid -loleaut32 
 
 ![7](https://github.com/akshitbtw/Wordle-C-Plus-Plus/assets/83155183/255dbacd-e5d6-4714-80cc-266b605f4ea3)
 
-![8](https://github.com/akshitbtw/Wordle-C-Plus-Plus/assets/83155183/20c165c6-2b6b-45d4-97f9-a12f8e4bd846)
+![8](https://github.com/akshitbtw/Wordle-C-Plus-Plus/assets/83155183/c2439709-c3be-4476-8528-74a5396bb41b)
 
 ![9](https://github.com/akshitbtw/Wordle-C-Plus-Plus/assets/83155183/5a0b598f-c5a7-4606-a8b9-65d2652344af)
 
